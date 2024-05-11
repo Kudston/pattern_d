@@ -1,0 +1,28 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  pattern_detect_api_test:
+    container_name: pattern_d_test
+    image: pattern_d_test
+    restart: unless-stopped
+    ports:
+      - 8500:8500 # tcp
+      - 8501:8101 # ssl
+    build: 
+      context: ../../
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./../../:/usr/src/pattern_d
+
+    command: uvicorn src.main:app --reload --port 8500 --host 0.0.0.0
+
+    environment:
+      - APP_NAME= pattern_d_test
+  
+
+networks:
+  default:
+    external: true
+    name: pattern_d_network
