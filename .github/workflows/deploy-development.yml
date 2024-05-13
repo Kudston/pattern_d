@@ -8,11 +8,8 @@ jobs:
     start_server:
         runs-on: ubuntu latest
         steps:
-            - name: Checkout
-            uses: actions/checkout@v4
-        run:
-            - start the server
-            - docker compose -f docker/local/docker-compose.yml up -d
-            - docker stop pattern_d
-            - docker rm pattern_d
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: start server
+          run: docker compose -f docker/local/docker-compose.yml up -d && docker stop pattern_d && docker rm pattern_d
 
