@@ -19,9 +19,27 @@ services:
     command: uvicorn src.main:app --reload --port 8500 --host 0.0.0.0
 
     environment:
-      - APP_NAME= pattern_d
-  
+      - APP_NAME=pattern_detect
 
+      - DB_USER=patterndb
+      - DB_PASSWORD=patternd
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=postgres
+
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:latest
+    container_name: pattern_d_db
+    restart: always
+      
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=patternd
+      - POSTGRES_USER=patterndb
 networks:
   default:
     external: true
